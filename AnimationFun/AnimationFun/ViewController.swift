@@ -10,18 +10,38 @@ import UIKit
 import SnapKit 
 
 class ViewController: UIViewController {
+    
+    //var dynamicAnimator: UIDynamicAnimator? = nil
+    let viewanimotors = UIViewPropertyAnimator(duration: 2.0, curve: .easeIn, animations: nil)
+    let squareSize = CGSize(width: 100.0, height: 100.0)
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         viewHiearchy()
         constraintConfiguration()
+        //self.dynamicAnimator = UIDynamicAnimator(referenceView: view)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+//        let gravityBehaivor = UIGravityBehavior(items: [leftYellowView,leftBlueView,leftPurpleView,
+//                                                    middleYellowView,middleBlueView,middlePurpleView,
+//                                                    rightYellowView,rightBlueView,rightPurpleView])
+//        gravityBehaivor.magnitude = 0.2
+//        self.dynamicAnimator?.addBehavior(gravityBehaivor)
+//        
+//        let collisionBehaivor = UICollisionBehavior(items: [leftYellowView,leftBlueView,leftPurpleView,
+//                                                    middleYellowView,middleBlueView,middlePurpleView,
+//                                                    rightYellowView,rightBlueView,rightPurpleView])
+//        collisionBehaivor.translatesReferenceBoundsIntoBoundary = true
+//        self.dynamicAnimator?.addBehavior(collisionBehaivor)
+        
     }
     
 // Mark: - Setting up view Hiearchy
     
     func viewHiearchy() {
-        
         self.view.addSubview(leftPurpleView)
         self.view.addSubview(middlePurpleView)
         self.view.addSubview(rightPurpleView)
@@ -35,6 +55,45 @@ class ViewController: UIViewController {
         
         self.resetButton.addTarget(self, action: #selector(snapBacktoPlace), for: .touchUpInside)
 
+    }
+    
+    // Mark: - Movement 
+    
+    internal func move(view: UIView, to point: CGPoint) {
+        view.snp.remakeConstraints { (view) in
+            view.center.equalTo(point)
+            view.size.equalTo(squareSize)
+        }
+        let animator = UIViewPropertyAnimator(duration: 2.0, dampingRatio: 0.9) { 
+            self.view.layoutIfNeeded()
+        }
+        animator.addAnimations({
+            view.transform = CGAffineTransform.identity
+        }, delayFactor: 0.85)
+        
+        animator.startAnimation()
+    }
+    
+    //Mark: - Tracking Touches 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            print("No touching!")
+            return
+        }
+        
+        let touchLocationInView = touch.location(in: view)
+        //    print("Touch at: \(touchLocationInView)")
+        
+        move(view: leftPurpleView, to: touchLocationInView)
+        move(view: middlePurpleView, to: touchLocationInView)
+        move(view: rightPurpleView, to: touchLocationInView)
+        move(view: leftBlueView, to: touchLocationInView)
+        move(view: middleBlueView, to: touchLocationInView)
+        move(view: rightBlueView, to: touchLocationInView)
+        move(view: leftYellowView, to: touchLocationInView)
+        move(view: middleYellowView, to: touchLocationInView)
+        move(view: rightYellowView, to: touchLocationInView)
+//
     }
     
 //MARK: - Constraint Configuration 
