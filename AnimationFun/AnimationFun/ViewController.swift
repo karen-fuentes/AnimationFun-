@@ -82,73 +82,121 @@ class ViewController: UIViewController {
         }
         
         let touchLocationInView = touch.location(in: view)
-        //    print("Touch at: \(touchLocationInView)")
+            print("Touch at: \(touchLocationInView)")
         
-        move(view: leftPurpleView, to: touchLocationInView)
-        move(view: middlePurpleView, to: touchLocationInView)
-        move(view: rightPurpleView, to: touchLocationInView)
-        move(view: leftBlueView, to: touchLocationInView)
-        move(view: middleBlueView, to: touchLocationInView)
-        move(view: rightBlueView, to: touchLocationInView)
-        move(view: leftYellowView, to: touchLocationInView)
-        move(view: middleYellowView, to: touchLocationInView)
-        move(view: rightYellowView, to: touchLocationInView)
-//
+        let touchInLPurple = leftPurpleView.frame.contains(touch.location(in: view))
+        let touchInMPurple = middlePurpleView.frame.contains(touch.location(in: view))
+        let touchInRPurple = rightPurpleView.frame.contains(touch.location(in: view))
+        
+        let touchInLBlue = leftBlueView.frame.contains(touch.location(in: view))
+        let touchInMBlue = middleBlueView.frame.contains(touch.location(in: view))
+        let touchInRBlue = rightBlueView.frame.contains(touch.location(in: view))
+        
+        let touchInLYellow = leftYellowView.frame.contains(touch.location(in: view))
+        let touchInMYellow = middleYellowView.frame.contains(touch.location(in: view))
+        let touchInRYelow = rightYellowView.frame.contains(touch.location(in: view))
+    
+       
+        
+        if touchInLPurple{
+            move(view: leftPurpleView, to: touchLocationInView)
+        }
+        if touchInMPurple{
+             move(view: middlePurpleView, to: touchLocationInView)
+        }
+        if touchInRPurple{
+            move(view: rightPurpleView, to: touchLocationInView)
+        }
+        
+        
+        if touchInLBlue{
+            move(view: leftBlueView, to: touchLocationInView)
+        }
+        if touchInRBlue{
+            move(view: rightBlueView, to: touchLocationInView)
+        }
+        if touchInMBlue{
+            move(view: middleBlueView, to: touchLocationInView)
+        }
+        
+        if touchInLYellow{
+            move(view: leftYellowView, to: touchLocationInView)
+        }
+        if touchInMYellow{
+            move(view: middleYellowView, to: touchLocationInView)
+        }
+        if touchInRYelow{
+            move(view: rightYellowView, to: touchLocationInView)
+        }
+        
+
     }
     
 //MARK: - Constraint Configuration 
     func constraintConfiguration() {
         self.edgesForExtendedLayout = []
         
+        leftPurpleView.snp.removeConstraints()
+        middlePurpleView.snp.removeConstraints()
+        rightPurpleView.snp.removeConstraints()
+        
+        leftBlueView.snp.removeConstraints()
+        middleBlueView.snp.removeConstraints()
+        rightBlueView.snp.removeConstraints()
+        
+        leftYellowView.snp.removeConstraints()
+        middleYellowView.snp.removeConstraints()
+        rightYellowView.snp.removeConstraints()
+        
         //first row
         leftPurpleView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
-            view.trailing.equalTo(middlePurpleView.snp.leading).offset(-20.0)
+            view.size.equalTo(squareSize)
+            view.centerX.equalToSuperview().offset(-120.0)
             view.top.equalToSuperview().offset(80.0)
         }
         middlePurpleView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
+            view.size.equalTo(squareSize)
             view.centerX.equalToSuperview()
             view.top.equalToSuperview().offset(80.0)
         }
         rightPurpleView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
-            view.leading.equalTo(middlePurpleView.snp.trailing).offset(20.0)
+            view.size.equalTo(squareSize)
+            view.centerX.equalToSuperview().offset(120.0)
             view.top.equalToSuperview().offset(80.0)
         }
         
         //second row
         leftBlueView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
-            view.trailing.equalTo(middleBlueView.snp.leading).offset(-20.0)
-            view.top.equalTo(leftPurpleView.snp.bottom).offset(20.0)
+            view.size.equalTo(squareSize)
+            view.centerX.equalToSuperview().offset(-120.0)
+             view.top.equalToSuperview().offset(200.00)
         }
         middleBlueView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
+            view.size.equalTo(squareSize)
             view.centerX.equalToSuperview()
-            view.top.equalTo(middlePurpleView.snp.bottom).offset(20.0)
+            view.top.equalToSuperview().offset(200.00)
         }
         rightBlueView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
-            view.leading.equalTo(middleBlueView.snp.trailing).offset(20.0)
-            view.top.equalTo(rightPurpleView.snp.bottom).offset(20.0)
+            view.size.equalTo(squareSize)
+            view.centerX.equalToSuperview().offset(120.0)
+            view.top.equalToSuperview().offset(200.00)
         }
         
         //third row
         leftYellowView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
-            view.trailing.equalTo(middleYellowView.snp.leading).offset(-20.0)
-            view.top.equalTo(leftBlueView.snp.bottom).offset(20.0)
+            view.size.equalTo(squareSize)
+            view.centerX.equalToSuperview().offset(-120.0)
+            view.top.equalToSuperview().offset(320.00)
         }
         middleYellowView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
+            view.size.equalTo(squareSize)
             view.centerX.equalToSuperview()
-            view.top.equalTo(middleBlueView.snp.bottom).offset(20.0)
+            view.top.equalToSuperview().offset(320.00)
         }
         rightYellowView.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 100.00, height: 100.00))
-            view.leading.equalTo(middleYellowView.snp.trailing).offset(20.0)
-            view.top.equalTo(rightBlueView.snp.bottom).offset(20.0)
+            view.size.equalTo(squareSize)
+            view.centerX.equalToSuperview().offset(120.0)
+            view.top.equalToSuperview().offset(320.00)
         }
         
         //button 
@@ -160,7 +208,19 @@ class ViewController: UIViewController {
     
 //Mark: - Reset Button functionality
     internal func snapBacktoPlace() {
-        
+    viewanimotors.isReversed = true
+    let _ = [
+        leftPurpleView,
+        middlePurpleView,
+        rightPurpleView,
+        leftBlueView,
+        middleBlueView,
+        rightBlueView,
+        leftYellowView,
+       middleYellowView,
+        rightYellowView
+    ].map{$0.transform = CGAffineTransform.identity}
+        constraintConfiguration()
     }
     
     
